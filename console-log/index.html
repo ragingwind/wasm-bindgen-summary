@@ -1,0 +1,11 @@
+<html>
+<script src="pkg/console_log.js"></script>
+<script type="module">
+  async function run() {
+    await wasm_bindgen('./pkg/console_log_bg.wasm');
+  }
+
+  run();
+</script>
+
+</html>
