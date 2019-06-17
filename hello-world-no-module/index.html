@@ -1,0 +1,14 @@
+<html>
+<script src="pkg/hello_world.js"></script>
+<script type="module">
+  const {greet} = wasm_bindgen;
+
+  async function run() {
+    await wasm_bindgen('./pkg/hello_world_bg.wasm');
+    greet('World');
+  }
+
+  run();
+</script>
+
+</html>
