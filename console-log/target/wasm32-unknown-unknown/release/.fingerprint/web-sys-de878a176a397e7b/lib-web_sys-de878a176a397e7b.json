@@ -1,1 +1,0 @@
-{"rustc":7052314952459834523,"features":"[\"console\"]","target":15658989686796867329,"profile":2574335274271406459,"path":8136189983137286859,"deps":[["js-sys v0.3.23","js_sys",10490467958949074864],["wasm-bindgen v0.2.46","wasm_bindgen",925011670787299345]],"local":[{"Precalculated":"0.3.23"}],"rustflags":[],"edition":"Edition2018"}
