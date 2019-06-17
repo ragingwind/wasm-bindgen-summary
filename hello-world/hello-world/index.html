@@ -1,0 +1,13 @@
+<html>
+<script type="module">
+  import init, {greet} from './pkg/hello_world.js';
+
+  async function run() {
+    await init();
+    greet('World');
+  }
+
+  run();
+</script>
+
+</html>

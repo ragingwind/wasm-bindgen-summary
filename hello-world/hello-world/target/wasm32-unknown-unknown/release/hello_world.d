@@ -1,0 +1,1 @@
+/Users/ragingwind/Workspace/wasm-bindgen-summary/hello-world/hello-world/target/wasm32-unknown-unknown/release/hello_world.wasm: /Users/ragingwind/Workspace/wasm-bindgen-summary/hello-world/hello-world/src/lib.rs
