@@ -1,2 +1,4 @@
 pkg
 target
+node_modules
+yarn.lock
