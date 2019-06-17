@@ -5,6 +5,12 @@
 
 ## Hello, World
 
-- `crate-type = ["cdylib"] is largely used for wasm file final artifacts today
+- `crate-type = ["cdylib"]` is largely used for wasm file final artifacts today
 - Install [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) via curl
+- wasm-pack supports a variety options of target to bundle wasm
 
+## console.log
+
+- `#[wasm_bindgen(start)]` will be running implicitly after loading wasm
+- binding js apis by `#[wasm_bindgen(js_namespace = console, js_name = log)]`
+- using `web_sys::console::log_1`
