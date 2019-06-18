@@ -26,3 +26,28 @@
 [profile.release]
 lto = true
 ```
+
+## Converting WebAssembly to JS
+
+- [Toolchain for WebAssembly](https://github.com/WebAssembly/binaryen), wasm2js, convert a wasm file to js
+- `wasm2js pkg/wasm2js_bg.wasm -o pkg/wasm2js_bg.js`
+
+## Importing non-browser JS
+
+```rust
+use wasm_bindgen::prelude::*;
+
+// raw_module has been added, you can use relative path
+#[wasm_bindgen(module = "/defined-in-js.js")]
+extern "C" {
+    #[wasm_bindgen(constructor)]
+    fn new() -> MyClass;
+
+    #[wasm_bindgen(method, getter)]
+    fn number(this: &MyClass) -> u32;
+    #[wasm_bindgen(method, setter)]
+    fn set_number(this: &MyClass, number: u32) -> MyClass;
+    #[wasm_bindgen(method)]
+    fn render(this: &MyClass) -> String;
+}
+```
