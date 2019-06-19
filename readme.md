@@ -51,3 +51,23 @@ extern "C" {
     fn render(this: &MyClass) -> String;
 }
 ```
+
+## Working with `char`
+
+- `#[wasm_bindgen] macro` will convert the rust char type to a single code-point js string
+
+```rust
+#[wasm_bindgen]
+#[derive(Debug)]
+pub struct Counter {
+    key: char,
+    count: i32,
+}
+
+...
+
+pub fn increment(&mut self) {
+    log("Counter.increment");
+    self.count += 1;
+}
+```
