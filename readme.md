@@ -75,3 +75,27 @@ pub fn increment(&mut self) {
 ## js-sys: WebAssembly in WebAssembly
 
 - `const WASM: &[u8] = include_bytes!("add.wasm");`
+
+## web-sys: DOM hello world
+
+- enable all the various APIs
+
+```
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Document',
+  'Element',
+  'HtmlElement',
+  'Node',
+  'Window',
+]
+```
+
+- get elements
+
+```rust
+let window = web_sys::window().expect("no global 'window' exists");
+let document = window.document().expect("should have a document on window");
+let body = document.body().expect("document should have a body");
+```
