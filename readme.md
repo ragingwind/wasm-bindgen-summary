@@ -71,3 +71,7 @@ pub fn increment(&mut self) {
     self.count += 1;
 }
 ```
+
+## js-sys: WebAssembly in WebAssembly
+
+- `const WASM: &[u8] = include_bytes!("add.wasm");`
