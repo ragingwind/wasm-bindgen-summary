@@ -1,6 +1,6 @@
 # wasm-bindgen
 
-> Rust library and CLI tool that faclitate high-level interactions between wasm modules and 
+> Rust library and CLI tool that faclitate high-level interactions between wasm modules and
 > Javascript.
 
 ## Hello, World
@@ -98,4 +98,43 @@ features = [
 let window = web_sys::window().expect("no global 'window' exists");
 let document = window.document().expect("should have a document on window");
 let body = document.body().expect("document should have a body");
+```
+
+## web-sys: Closure
+
+- array function
+
+```rust
+array.for_each(&mut |obj, idx, _arr| match idx { ... });
+```
+
+- timer
+
+```rust
+update_time(&current_time);
+
+let a = Closure::wrap(Box::new(move || update_time(&current_time)) as Box<dyn Fn()>);
+window
+    .set_interval_with_callback_and_timeout_and_arguments_0(a.as_ref().unchecked_ref(), 1000)?;
+
+fn update_time(current_time: &Element) {
+    current_time.set_inner_html(&String::from(
+        Date::new_0().to_locale_string("en-GB", &JsValue::undefined()),
+    ));
+}
+```
+
+- click
+
+```rust
+let mut clicks = 0;
+let a = Closure::wrap(Box::new(move || {
+    clicks += 1;
+}) as Box<dyn FnMut()>);
+
+document
+  .get_element_by_id("green-square")
+  .dyn_ref::<HtmlElement>()
+  .set_onclick(Some(a.as_ref().unchecked_ref()));
+a.forget();
 ```
