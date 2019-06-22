@@ -196,3 +196,57 @@ let context = canvas
         .dyn_into::<web_sys::CanvasRenderingContext2d>()
         .unwrap();
 ```
+
+## web-sys: WebAudio
+
+```rust
+let ctx = web_sys::AudioContext::new()?;
+
+// Create our web audio objects.
+let primary = ctx.create_oscillator()?;
+let fm_osc = ctx.create_oscillator()?;
+let gain = ctx.create_gain()?;
+let fm_gain = ctx.create_gain()?;
+
+// Some initial settings:
+primary.set_type(OscillatorType::Sine);
+primary.frequency().set_value(440.0); // A4 note
+gain.gain().set_value(0.0); // starts muted
+fm_gain.gain().set_value(0.0); // no initial frequency modulation
+fm_osc.set_type(OscillatorType::Sine);
+fm_osc.frequency().set_value(0.0);
+```
+
+## web-sys: WebGL
+
+```rust
+let canvas = document.get_element_by_id("canvas").unwrap();
+let canvas: web_sys::HtmlCanvasElement = canvas.dyn_into::<web_sys::HtmlCanvasElement>()?;
+
+let context = canvas
+    .get_context("webgl")?
+    .unwrap()
+    .dyn_into::<WebGlRenderingContext>()?;
+
+let vert_shader = compile_shader(
+    &context,
+    WebGlRenderingContext::VERTEX_SHADER,
+    r#"
+    attribute vec4 position;
+    void main() {
+        gl_Position = position;
+    }
+"#,
+)?;
+let frag_shader = compile_shader(
+    &context,
+    WebGlRenderingContext::FRAGMENT_SHADER,
+    r#"
+    void main() {
+        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    }
+"#,
+)?;
+let program = link_program(&context, &vert_shader, &frag_shader)?;
+context.use_program(Some(&program));
+```
