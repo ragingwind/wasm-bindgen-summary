@@ -1,0 +1,27 @@
+[package]
+name = "web-sys-fetch"
+version = "0.1.0"
+authors = ["Jimmy Moon <ragingwind@gmail.com>"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+futures = "0.1.20"
+wasm-bindgen = { version = "0.2.47", features = ["serde-serialize"]  }
+js-sys = "0.3.24"
+wasm-bindgen-futures = "0.3.24"
+serde = { version = "1.0.80", features = ["derive"] }
+serde_derive = "^1.0.59"
+
+[dependencies.web-sys]
+version = "0.3.4"
+features = [
+  'Headers',
+  'Request',
+  'RequestInit',
+  'RequestMode',
+  'Response',
+  'Window',
+]
