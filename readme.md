@@ -185,3 +185,14 @@ let future = JsFuture::from(request_promise)
 // Convert this Rust `Future` back into a JS `Promise`.
 future_to_promise(future)
 ```
+
+## web-sys: 2D Canvas
+
+```rust
+let context = canvas
+        .get_context("2d")
+        .unwrap()
+        .unwrap()
+        .dyn_into::<web_sys::CanvasRenderingContext2d>()
+        .unwrap();
+```
