@@ -264,3 +264,11 @@ let onmessage_callback = Closure::wrap(Box::new(move |e: MessageEvent| {
     console_log!("message event, received data: {:?}", response);
 }) as Box<dyn FnMut(MessageEvent)>);
 ```
+
+## web-sys: rAF
+
+```rust
+window()
+      .request_animation_frame(f.as_ref().unchecked_ref())
+      .expect("should register 'ra' ok");
+```
