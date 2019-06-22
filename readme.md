@@ -272,3 +272,15 @@ window()
       .request_animation_frame(f.as_ref().unchecked_ref())
       .expect("should register 'ra' ok");
 ```
+
+## web-sys: paint
+
+```rust
+let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
+    context.begin_path();
+    context.move_to(event.offset_x() as f64, event.offset_y() as f64);
+    pressed.set(true);
+}) as Box<dyn FnMut(_)>);
+canvas.add_event_listener_with_callback("mousedown", closure.as_ref().unchecked_ref())?;
+closure.forget();
+```
