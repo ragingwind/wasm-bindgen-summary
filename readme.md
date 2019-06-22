@@ -250,3 +250,17 @@ let frag_shader = compile_shader(
 let program = link_program(&context, &vert_shader, &frag_shader)?;
 context.use_program(Some(&program));
 ```
+
+## web-sys: WebSockets
+
+```rust
+let ws = WebSocket::new("wss://echo.websocket.org")?;
+
+let onmessage_callback = Closure::wrap(Box::new(move |e: MessageEvent| {
+    let response = e
+        .data()
+        .as_string()
+        .expect("Can't convert received data to a string");
+    console_log!("message event, received data: {:?}", response);
+}) as Box<dyn FnMut(MessageEvent)>);
+```
