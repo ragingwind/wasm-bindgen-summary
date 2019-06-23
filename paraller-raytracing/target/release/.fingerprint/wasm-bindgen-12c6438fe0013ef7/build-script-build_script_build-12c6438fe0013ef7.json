@@ -1,0 +1,1 @@
+{"rustc":7052314952459834523,"features":"[\"default\", \"serde\", \"serde-serialize\", \"serde_json\", \"spans\", \"std\", \"wasm-bindgen-macro\"]","target":10429514197457385088,"profile":2574335274271406459,"path":16032717783861535101,"deps":[],"local":[{"Precalculated":"0.2.47"}],"rustflags":[],"edition":"Edition2018"}
