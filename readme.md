@@ -284,3 +284,73 @@ let closure = Closure::wrap(Box::new(move |event: web_sys::MouseEvent| {
 canvas.add_event_listener_with_callback("mousedown", closure.as_ref().unchecked_ref())?;
 closure.forget();
 ```
+
+## web-sys: Parallel Raytracing [WIP]
+
+```rust
+use web_sys::{ErrorEvent, Event, Worker};
+...
+let worker = Worker::new("./worker.js")?;
+let array = js_sys::Array::new();
+array.push(&wasm_bindgen::module());
+array.push(&wasm_bindgen::memory());
+worker.post_message(&array)?;
+```
+
+## TODO MVC using wasm-bingen and web-sys
+
+- deletate API set for elements
+
+```rust
+impl Element {
+    pub fn create_element(tag: &str) -> Option<Element> {
+        if let Some(el) = web_sys::window()?.document()?.create_element(tag).ok() {
+            Some(el.into())
+        } else {
+            None
+        }
+    }
+
+    pub fn qs(selector: &str) -> Option<Element> {
+        let body: web_sys::Element = web_sys::window()?.document()?.body()?.into();
+        let el = body.query_selector(selector).ok()?;
+        Some(Element { el })
+    }
+
+    pub fn add_event_listener<T>(&mut self, event_name: &str, handler: T)
+    where
+        T: 'static + FnMut(web_sys::Event),
+    {
+        let cb = Closure::wrap(Box::new(handler) as Box<dyn FnMut(_)>);
+        if let Some(el) = self.el.take() {
+            let el_et: EventTarget = el.into();
+            el_et
+                .add_event_listener_with_callback(event_name, cb.as_ref().unchecked_ref())
+                .unwrap();
+            cb.forget();
+            if let Ok(el) = el_et.dyn_into::<web_sys::Element>() {
+                self.el = Some(el);
+            }
+        }
+    }
+}
+```
+
+- event binding and managing for route changing
+
+```rust
+let set_page = Closure::wrap(Box::new(move || {
+    if let Some(location) = document.location() {
+        if let Ok(hash) = location.hash() {
+            if let Ok(sched) = &(sched.try_borrow_mut()) {
+                sched.add_message(Message::Controller(ControllerMessage::SetPage(hash)));
+            }
+        }
+    }
+}) as Box<dyn FnMut()>);
+
+let window_et: web_sys::EventTarget = window.into();
+window_et
+    .add_event_listener_with_callback("hashchange", set_page.as_ref().unchecked_ref())
+    .unwrap();
+```
