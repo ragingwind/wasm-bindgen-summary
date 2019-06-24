@@ -120,9 +120,6 @@ impl WorkerPool {
     where
         T: Send + 'static,
     {
-        // FIXME(#1379) we should just use the `oneshot` directly as the future,
-        // but we have to use JS callbacks to ensure we don't have futures cross
-        // threads as that's currently not safe to do so.
         let (tx, rx) = oneshot::channel();
         let storage = Arc::new(AtomicValue::new(None));
         let storage2 = storage.clone();
